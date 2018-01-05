@@ -13,11 +13,13 @@ $(document).ready(function(){
 function getPosts(){
 	//[data][children][#][data][domain] = domain name
 	//[data][children][#][data][url] = post url
-	$.get("https://www.reddit.com/r/wallpaper.json", function(data, status){
+	$.get("https://www.reddit.com/r/wallpaper.json?limit=100&after=101", function(data, status){
+
+		console.log(data["data"]["children"].length);
 
 		for ( var i = 0; i < data["data"]["children"].length; ++i ) {
 			for ( var j = 0; j < DOMAIN_LIST.length; ++j ) {
-				console.log(data["data"]["children"][i]["data"]["domain"]);
+				//console.log(data["data"]["children"][i]["data"]["domain"]);
 				if ( data["data"]["children"][i]["data"]["domain"] == DOMAIN_LIST[j] ) {
 					if ( j == 2 ) {
 						POSTS.push( gyfcatConversion(data["data"]["children"][i]["data"]["url"]) );
@@ -58,7 +60,7 @@ function debug_advance() {
 	if ( $("#slideshow_image").height() > window_height ) {
     	$("#slideshow_image").css('height', window_height)
     }
-    
+
     global_slider_timeout = setTimeout(debug_advance, slider_delay);
 }
 
